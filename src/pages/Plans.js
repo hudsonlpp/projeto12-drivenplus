@@ -22,12 +22,15 @@ export default function Plans() {
   const [membershipsID,setMembershipsID] = useState([]);
   const {auth}= React.useContext(AuthContext);
   const {idPlan} = useParams();
-
-  const [formData, setFormData] = useState({ cardName: '', cardNumber: '', securityNumber: '', expirationDate: '' }); 
+  const config = {
+    headers: { Authorization: `Bearer ${auth.token}` }    
+}
+  
+  const [formData, setFormData] = useState({ membershipID: idPlan, cardName: '', cardNumber: '', securityNumber: '', expirationDate: '' }); 
 
 
   useEffect(() => {
-    axios.get(`${BASE_URL}/subscriptions/memberships/${idPlan}`, api.createConfig)
+    axios.get(`${BASE_URL}/subscriptions/memberships/${idPlan}`, config)
     .then((res)=>setMembershipsID(res.data))
     .catch((err)=>console.log(err.response.data.message))
   }, [idPlan, config])
@@ -39,7 +42,6 @@ export default function Plans() {
 
     function handleSubmit(e) {
         e.preventDefault();
-        e.membershipID=idPlan;
 
         setIsLoading(true);
         const promise = api.SubscribePlan({
