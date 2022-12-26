@@ -19,13 +19,12 @@ export default function Plans() {
   let location = useLocation()
   const [isLoading, setIsLoading] = useState(false);
   const [membershipsID,setMembershipsID] = useState([]);
-  const {auth}= React.useContext(AuthContext);
-  const {idPlan} = useParams();
+  const {auth, setAuth}= React.useContext(AuthContext);
+  const idPlan = parseInt(useParams().idPlan);
   const config = {
     headers: { Authorization: `Bearer ${auth.token}` }    
 }
-  
-  const [formData, setFormData] = useState({ membershipID: idPlan, cardName: '', cardNumber: '', securityNumber: '', expirationDate: '' }); 
+  const [formData, setFormData] = useState({ membershipId: idPlan, cardName: '', cardNumber: '', securityNumber: '', expirationDate: '' }); 
 
 
   useEffect(() => {
@@ -35,7 +34,10 @@ export default function Plans() {
  })
   
     function handleChange(e) {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
+        let data = {...formData};
+        if(e.target.name === "securityNumber") data[e.target.name]=parseInt(e.target.value);
+        else data[e.target.name]=e.target.value
+        setFormData(data);
       }
       
 
@@ -46,16 +48,16 @@ export default function Plans() {
         setIsLoading(true);
         const promise = api.SubscribePlan({
         ...formData
-        });
+        }, config);
 
-        promise.then(() => {
+        promise.then((res) => {
         setIsLoading(false);
+        let newAuth = {...auth}
+        newAuth.membership=res.data.membership;
+        setAuth(newAuth);
         navigate("/home");
-        });
-        promise.catch((err) => console.log(err.response.data.message));{
+        }).catch((err) => console.log(err.response.data.message));
         setIsLoading(false);
-        alert('Erro, tente novamente');
-        };
         console.log(formData)
     }
 

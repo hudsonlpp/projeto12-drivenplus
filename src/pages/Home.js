@@ -1,16 +1,24 @@
 import styled from "styled-components";
 import Header from "../components/Header";
 import { Button } from "../components/FormComponents/Button";
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
+import AuthContext from "../context/auth";
+import axios from "axios";
+import { BASE_URL } from "../Services/api";
+import { Link } from "react-router-dom";
 
 export default function Home() {
   const[perks,setPerks] = useState([]);
-
-  // useEffect(() => {
-  //   axios.get(`${BASE_URL}/subscriptions/memberships`, config)
-  //   .then((res)=>setPerks(res.data))
-  //   .catch((err)=>console.log(err.response.data.message))
-  // }, [])
+  const {auth}= React.useContext(AuthContext);
+  const config = {
+    headers: { Authorization: `Bearer ${auth.token}` }    
+}
+console.log(auth)
+  useEffect(() => {
+    axios.get(`${BASE_URL}/subscriptions`, config)
+    .then((res)=>setPerks(res.data))
+    .catch((err)=>console.log(err.response.data.message))
+  }, [])
 
 
   return (
@@ -21,7 +29,7 @@ export default function Home() {
       <Button/>
       <Button/>
       <Button/>
-      {/* {memberships.map((e)=>(
+      {/* {perks.map((e)=>(
           <Link key={e.id} to={e.Link}>
             <Button id={e.id}>{e.title}</Button>
           </Link>

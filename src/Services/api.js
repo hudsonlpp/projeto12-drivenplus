@@ -19,10 +19,9 @@ function signUp(body) {
   return promise;
 }
 
-function SubscribePlan(body, token, idPlan) {
-  const config = createConfig(token);
+function SubscribePlan(body, auth) {
 
-  const promise = axios.post(`${BASE_URL}/subscriptions`, body, AuthContext);
+  const promise = axios.post(`${BASE_URL}/subscriptions`, body, auth);
 
   return promise;
 }
