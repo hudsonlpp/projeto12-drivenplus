@@ -1,4 +1,5 @@
 import axios from 'axios';
+import AuthContext from '../context/auth';
 
 export const BASE_URL = 'https://mock-api.driven.com.br/api/v4/driven-plus';
 
@@ -18,10 +19,10 @@ function signUp(body) {
   return promise;
 }
 
-function assinarPlano(body, token) {
+function SubscribePlan(body, token, idPlan) {
   const config = createConfig(token);
 
-  const promise = axios.post(`${BASE_URL}/subscriptions/${idPlan}`, body, config);
+  const promise = axios.post(`${BASE_URL}/subscriptions`, body, AuthContext);
 
   return promise;
 }
@@ -31,7 +32,7 @@ const api = {
   createConfig,
   login,
   signUp,
-  assinarPlano
+  SubscribePlan
 }
 
 export default api;

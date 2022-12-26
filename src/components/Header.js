@@ -25,6 +25,9 @@ export default function Header() {
 }
 
 const Container = styled.header`
+  padding-left: 38px;
+  padding-right: 22px;
+  padding-top: 32px;
   width: 100%;
   height: 70px;
 
@@ -37,8 +40,7 @@ const Container = styled.header`
   top: 0px;
   z-index: 1;
 
-  background: #126BA5;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
+  background: black;
 
   & > img {
     cursor: pointer;
@@ -48,9 +50,7 @@ const Container = styled.header`
 const Avatar = styled.img`
   display: block;
 
-  width: 50px;
-  height: 50px;
-
+  width: 34px;
   border-radius: 50%;
 `;
 

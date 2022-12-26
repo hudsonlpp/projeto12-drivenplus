@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { Link, useNavigate, useLocation, useParams } from "react-router-dom"
-import { Container } from "./Home";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { BASE_URL } from "../Services/api"
@@ -33,7 +32,7 @@ export default function Plans() {
     axios.get(`${BASE_URL}/subscriptions/memberships/${idPlan}`, config)
     .then((res)=>setMembershipsID(res.data))
     .catch((err)=>console.log(err.response.data.message))
-  }, [idPlan, config])
+ })
   
     function handleChange(e) {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -42,6 +41,7 @@ export default function Plans() {
 
     function handleSubmit(e) {
         e.preventDefault();
+        e.membershipID=idPlan;
 
         setIsLoading(true);
         const promise = api.SubscribePlan({
@@ -56,9 +56,7 @@ export default function Plans() {
         setIsLoading(false);
         alert('Erro, tente novamente');
         };
-
-        console.log(setIsLoading)
-
+        console.log(formData)
     }
 
 
@@ -135,6 +133,15 @@ export default function Plans() {
   )
 }
 
+export const Container = styled.div`
+    width: 375px;
+    height: 100vh;
+    background-color: #0E0E13;
+    color: #ffffff;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 32px;`
 
 export const Header = styled.div`
     width: 100%;
