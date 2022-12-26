@@ -1,25 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import styled from "styled-components";
+import { GlobalStyle } from "./Styles/GlobalStyles"
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Plan from "./pages/Plan";
+import Plans from "./pages/Plans";
+import SignUp from "./pages/SignUp";
+import { AuthProvider } from "./context/auth";
 
-function App() {
+export default function App() {
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AuthProvider>
+      <BrowserRouter>
+      <GlobalStyle />
+          <Routes>
+          <Route path="/" element={<Login />}></Route>
+          <Route path="/sign-up" element={<SignUp />}></Route>
+          <Route path="/subscriptions" element={<Plan/>}></Route>
+          <Route path="/subscriptions/:idPlan" element={<Plans/>}></Route>
+          <Route path="/home" element={<Home/>}></Route>
+          </Routes>
+        </BrowserRouter>
+    </AuthProvider>
   );
 }
 
-export default App;
+export const Body = styled.div`
+  background-color: #0E0E13;
+`;
