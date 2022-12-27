@@ -11,14 +11,14 @@ import { Input } from "../components/FormComponents/Input";
 import { Button } from "../components/FormComponents/Button";
 import api from "../Services/api";
 import { Form } from "../components/FormComponents/Form";
-
-
+import Modal from "../components/Modal"
 
 export default function Plans() {
   const navigate = useNavigate()
   let location = useLocation()
   const [isLoading, setIsLoading] = useState(false);
   const [membershipsID,setMembershipsID] = useState([]);
+  const [modal, setModal] = useState(false);
   const {auth, setAuth}= React.useContext(AuthContext);
   const idPlan = parseInt(useParams().idPlan);
   const config = {
@@ -44,95 +44,101 @@ export default function Plans() {
     function handleSubmit(e) {
         e.preventDefault();
         e.membershipID=idPlan;
-
         setIsLoading(true);
+        setModal(true);
         const promise = api.SubscribePlan({
         ...formData
         }, config);
-
         promise.then((res) => {
         setIsLoading(false);
         let newAuth = {...auth}
         newAuth.membership=res.data.membership;
         setAuth(newAuth);
+        // console.log("plano assinado! ", res.data);
+        // setAuth({ ...auth, membership: res.data.membership });
         navigate("/home");
         }).catch((err) => console.log(err.response.data.message));
         setIsLoading(false);
         console.log(formData)
     }
 
-
   return (
-    <Container>
-        <Header>
-            <Link to="/">
-                {location.pathname !== "/" && <BackArrow onClick={() => navigate(-1)} src={backarrow} alt="arrow"/>}
-            </Link>
-        </Header>
-        <Signature>
+        <Container>
+        {modal && (<Modal/>)}
 
-            <Name>
-                <img alt="DRIVEN +" src={membershipsID.image} />
-                <h1>{membershipsID.name}</h1>
-            </Name>
-            <Detail>
-                <img alt="placa" src={placa} />
-                <span>Benefícios:</span>
-                <ul>
-                    <li>1. Brindes exclusivos</li>
-                    <li>2. Materiais bônus de web</li>
-                </ul>
-                <img alt="nota" src={nota} />           
-                <span>Preco:</span>
-                <h1>R$ {membershipsID.price} cobrados mensalmente</h1>
-            </Detail>
+            <Header>
+                <Link to="/">
+                    {location.pathname !== "/" && <BackArrow onClick={() => navigate(-1)} src={backarrow} alt="arrow"/>}
+                </Link>
+            </Header>
+            <Signature>
 
-            <Form onSubmit={handleSubmit}>
-                <Input
-                type="text"
-                placeholder="Nome impresso no cartão"
-                name="cardName"
-                onChange={handleChange}
-                value={formData.cardName}
-                disabled={isLoading}
-                required
-                />
-                <Input
-                type="text"
-                placeholder="Digitos do cartão"
-                name="cardNumber"
-                onChange={handleChange}
-                value={formData.cardNumber}
-                disabled={isLoading}
-                required
-                />
-                <Input
-                type="text"
-                placeholder="Código de segurança"
-                name="securityNumber"
-                onChange={handleChange}
-                value={formData.securityNumber}
-                disabled={isLoading}
-                required
-                />
-                <Input
-                type="text"
-                placeholder="Validade"
-                name="expirationDate"
-                onChange={handleChange}
-                value={formData.expirationDate}
-                disabled={isLoading}
-                required
-                />
-                <Button type="submit" disabled={isLoading}>
-                ASSINAR
-                </Button>    
-            </Form>
+                <Name>
+                    <img alt="DRIVEN +" src={membershipsID.image} />
+                    <h1>{membershipsID.name}</h1>
+                </Name>
+                <Detail>
+                    <img alt="placa" src={placa} />
+                    <span>Benefícios:</span>
+                    <ul>
+                        <li>1. Brindes exclusivos</li>
+                        <li>2. Materiais bônus de web</li>
+                    </ul>
+                    <img alt="nota" src={nota} />           
+                    <span>Preco:</span>
+                    <h1>R$ {membershipsID.price} cobrados mensalmente</h1>
+                </Detail>
 
-        </Signature>
+                <Form onSubmit={handleSubmit}>
+                    <Input
+                    type="text"
+                    placeholder="Nome impresso no cartão"
+                    name="cardName"
+                    onChange={handleChange}
+                    value={formData.cardName}
+                    disabled={isLoading}
+                    required
+                    />
+                    <Input
+                    type="text"
+                    placeholder="Digitos do cartão"
+                    name="cardNumber"
+                    onChange={handleChange}
+                    value={formData.cardNumber}
+                    disabled={isLoading}
+                    required
+                    />
+                    <Display>
+                        <HalfInput
+                        type="text"
+                        placeholder="Código de segurança"
+                        name="securityNumber"
+                        onChange={handleChange}
+                        value={formData.securityNumber}
+                        disabled={isLoading}
+                        required
+                        />
+                        <HalfInput
+                        type="text"
+                        placeholder="Validade"
+                        name="expirationDate"
+                        onChange={handleChange}
+                        value={formData.expirationDate}
+                        disabled={isLoading}
+                        required
+                        />
+                    </Display>
+                    <Button type="submit" >
+                    ASSINAR
+                    </Button>    
 
-    </Container>
+                </Form>
+
+            </Signature>
+
+        </Container>
   )
+
 }
 
 export const Container = styled.div`
@@ -171,7 +177,7 @@ export const BackArrow = styled.img`
     cursor: pointer;
 `
 export const Signature = styled.div`
-    padding-top: 80px;
+    padding-top: 90px;
 `
 
 export const Name = styled.div`
@@ -184,7 +190,7 @@ export const Name = styled.div`
 
 export const Detail = styled.div`
     margin-left: 40px;
-    margin-bottom: 34px;
+    margin-bottom: 44px;
     font-weight: 400;
     font-size: 14px;
     ul{
@@ -196,3 +202,12 @@ export const Detail = styled.div`
     img{
         margin-right: 5px;
     }`
+
+export const HalfInput = styled(Input)`
+    width: 145px;
+  `
+export const Display =styled.div`
+    display: flex;
+    gap: 9px;
+    margin-bottom: 10px;
+    `

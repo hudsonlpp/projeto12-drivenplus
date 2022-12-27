@@ -13,11 +13,15 @@ export default function Footer() {
  export const FooterContainer = styled.div`
     width: 100%;
     height: 120px;
-    background-color: black;
+    background-color: #0E0E13;
     display: flex;
     flex-direction: column;
     align-items: center;
     font-size: 20px;
     position: fixed;
-    bottom: 0;
+    bottom: 10;
+    padding-bottom: 10px;
     `
+
+    
+

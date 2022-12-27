@@ -8,4 +8,3 @@ export const StyledLink = styled(Link)`
 
   color: #FFFFFF;
 `;
-

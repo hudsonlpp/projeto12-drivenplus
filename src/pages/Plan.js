@@ -28,7 +28,7 @@ export default function Plan() {
     <StyledDiv>
       <h2>Escolha seu Plano</h2>
           {memberships.map((e)=>(
-          <Link key={e.id} to={`/subscriptions/${e.id}`}>
+          <Link style={{textDecoration: 'none'}} key={e.id} to={`/subscriptions/${e.id}`}>
             <PlanButton image={e.image} price={e.price}/>
         </Link>
         ))}
@@ -45,6 +45,7 @@ export const StyledDiv = styled.div`
   font-weight: 700;
   font-size: 32px;
 
+
   h2{
     display: flex;
     justify-content: center;
@@ -52,6 +53,6 @@ export const StyledDiv = styled.div`
     margin-bottom: 20px;
     font-family: 'Roboto';
     font-weight: 700;
-    font-size: 32px;
+    font-size: 32px;  
   }
 `;

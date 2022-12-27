@@ -1,12 +1,11 @@
 import styled from "styled-components";
 // import { useNavigate, useLocation } from "react-router-dom";
 // import { Container, Avatar } from "./style";
-import Group from "../assets/images/Group.png"
-import carinha from "../assets/images/carinha.png"
+import carinha from "../../assets/images/carinha.png"
 // import useAuth from "../../hooks/useAuth";
 // import { pathsWithoutHeaderAndMenu } from "../../App";
 
-export default function Header() {
+export default function Header(props) {
 //   const { auth } = useAuth();
 //   const navigate = useNavigate();
 //   const location = useLocation();
@@ -17,9 +16,9 @@ export default function Header() {
 
   return (
     <Container>
-      <img src={Group} alt="Group" />
+      <Avatar src={props.image} alt="Group" />
 
-      <Avatar src={carinha} alt="carinha" />
+      <img src={carinha} alt="carinha" />
     </Container>
   );
 }
@@ -39,19 +38,15 @@ const Container = styled.header`
   left: 0px;
   top: 0px;
   z-index: 1;
+  background-color: #0E0E13;
 
-  background: black;
-
-  & > img {
-    cursor: pointer;
-  }
 `;
 
 const Avatar = styled.img`
+  width: 80px;
   display: block;
+  margin-top: 32px;
 
-  width: 34px;
-  border-radius: 50%;
 `;
 
 export {
