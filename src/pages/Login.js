@@ -35,7 +35,7 @@ export default function Login() {
       setIsLoading(false);
 
       login(response.data);
-      navigate("/today");
+      navigate("/subscriptions");
     });
     promise.catch(() => {
       setIsLoading(false);

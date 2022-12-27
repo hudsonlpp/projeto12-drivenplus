@@ -6,9 +6,10 @@ import { BASE_URL } from "../Services/api";
 import { useParams } from "react-router-dom"
 import AuthContext from "../context/auth";
 import React from "react";
+import { FaWindowClose } from "react-icons/fa";
 
 
-export default function Modal({ setModal, planName, planPrice }) {
+export default function Modal({ setModal, planName, planPrice, handleSubmit }) {
   // const [memberships,setMemberships] = useState([]);
 //   const idPlan = parseInt(useParams().idPlan);
 //   const {auth, setAuth}= React.useContext(AuthContext);
@@ -24,14 +25,14 @@ export default function Modal({ setModal, planName, planPrice }) {
 //  })
   return (
     <ModalContainer>
-      <img src={close} alt="" onChange={() => setModal(false)}/>
+      <FaWindowClose className="Xis" color={"white"} size={32} onClick={() => setModal(false)}/>
       <Popup>
         <p>
           Tem certeza que deseja assinar o plano {planName} (R$ {planPrice})?
         </p>
         <div>
-          <button onChange={() => setModal(false)}>Não</button>
-          <button>SIM</button>
+          <button onClick={() => setModal(false)}>Não</button>
+          <button onClick={handleSubmit}>SIM</button>
         </div>
       </Popup>
     </ModalContainer>
@@ -46,7 +47,7 @@ const ModalContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  img:first-child {
+  .Xis{
     position: absolute;
     top: 22px;
     right: 22px;

@@ -39,13 +39,16 @@ export default function Plans() {
         else data[e.target.name]=e.target.value
         setFormData(data);
       }
+
+    function EModal(e){
+        e.preventDefault();
+        setModal(true)
+        setIsLoading(true);
+    }
       
 
     function handleSubmit(e) {
-        e.preventDefault();
         e.membershipID=idPlan;
-        setIsLoading(true);
-        setModal(true);
         const promise = api.SubscribePlan({
         ...formData
         }, config);
@@ -64,7 +67,7 @@ export default function Plans() {
 
   return (
         <Container>
-        {modal && (<Modal setModal={setModal} planName={membershipsID.name} planPrice={membershipsID.price}/>)}
+        {modal && (<Modal setModal={setModal} planName={membershipsID.name} planPrice={membershipsID.price} handleSubmit={handleSubmit}/>)}
 
             <Header>
                 <Link to="/">
@@ -89,7 +92,7 @@ export default function Plans() {
                     <h1>R$ {membershipsID.price} cobrados mensalmente</h1>
                 </Detail>
 
-                <Form onSubmit={handleSubmit}>
+                <Form onSubmit={(e)=> EModal(e)}>
                     <Input
                     type="text"
                     placeholder="Nome impresso no cartão"
@@ -128,7 +131,7 @@ export default function Plans() {
                         required
                         />
                     </Display>
-                    <Button type="button" onClick={() => setModal(true)}>
+                    <Button type="button" onClick={setModal}>
                     ASSINAR
                     </Button>    
 
