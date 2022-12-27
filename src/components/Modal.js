@@ -8,30 +8,30 @@ import AuthContext from "../context/auth";
 import React from "react";
 
 
-export default function Modal({setModal,handleSubmit}) {
-  const [memberships,setMemberships] = useState([]);
-  const idPlan = parseInt(useParams().idPlan);
-  const {auth, setAuth}= React.useContext(AuthContext);
+export default function Modal({ setModal, planName, planPrice }) {
+  // const [memberships,setMemberships] = useState([]);
+//   const idPlan = parseInt(useParams().idPlan);
+//   const {auth, setAuth}= React.useContext(AuthContext);
 
-  const config = {
-    headers: { Authorization: `Bearer ${auth.token}` }    
-}
+//   const config = {
+//     headers: { Authorization: `Bearer ${auth.token}` }    
+// }
 
-  useEffect(() => {
-    axios.get(`${BASE_URL}/subscriptions/memberships/${idPlan}`, config)
-    .then((res)=>setMemberships(res.data))
-    .catch((err)=>console.log(err.response.data.message))
- })
+//   useEffect(() => {
+//     axios.get(`${BASE_URL}/subscriptions/memberships/${idPlan}`, config)
+//     .then((res)=>setMemberships(res.data))
+//     .catch((err)=>console.log(err.response.data.message))
+//  })
   return (
     <ModalContainer>
       <img src={close} alt="" onChange={() => setModal(false)}/>
       <Popup>
         <p>
-          Tem certeza que deseja assinar o plano {memberships.name} (R$ {memberships.price})?
+          Tem certeza que deseja assinar o plano {planName} (R$ {planPrice})?
         </p>
         <div>
           <button onChange={() => setModal(false)}>Não</button>
-          <button onClick={handleSubmit}>SIM</button>
+          <button>SIM</button>
         </div>
       </Popup>
     </ModalContainer>
