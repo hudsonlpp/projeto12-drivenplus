@@ -6,8 +6,8 @@ import { BASE_URL } from "../Services/api"
 import AuthContext from "../context/auth";
 import { Link } from "react-router-dom";
 
-export default function Plan() {
 
+export default function Plan() {
   const [memberships,setMemberships] = useState([]);
   const {auth}= React.useContext(AuthContext);
   const config = {

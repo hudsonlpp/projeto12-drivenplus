@@ -10,19 +10,6 @@ import { FaWindowClose } from "react-icons/fa";
 
 
 export default function Modal({ setModal, planName, planPrice, handleSubmit }) {
-  // const [memberships,setMemberships] = useState([]);
-//   const idPlan = parseInt(useParams().idPlan);
-//   const {auth, setAuth}= React.useContext(AuthContext);
-
-//   const config = {
-//     headers: { Authorization: `Bearer ${auth.token}` }    
-// }
-
-//   useEffect(() => {
-//     axios.get(`${BASE_URL}/subscriptions/memberships/${idPlan}`, config)
-//     .then((res)=>setMemberships(res.data))
-//     .catch((err)=>console.log(err.response.data.message))
-//  })
   return (
     <ModalContainer>
       <FaWindowClose className="Xis" color={"white"} size={32} onClick={() => setModal(false)}/>
@@ -47,6 +34,7 @@ const ModalContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 100;
   .Xis{
     position: absolute;
     top: 22px;

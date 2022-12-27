@@ -45,6 +45,12 @@ export default function Plans() {
         setModal(true)
         setIsLoading(true);
     }
+
+    function ModalLaucher(){
+        if(formData.cardName && formData.cardNumber && formData.securityNumber && formData.expirationDate){
+            setModal(true)
+        }
+    }
       
 
     function handleSubmit(e) {
@@ -54,11 +60,10 @@ export default function Plans() {
         }, config);
         promise.then((res) => {
         setIsLoading(false);
-        let newAuth = {...auth}
-        newAuth.membership=res.data.membership;
+        let newAuth = { ...auth, membership: res.data.membership }
         setAuth(newAuth);
-        // console.log("plano assinado! ", res.data);
-        // setAuth({ ...auth, membership: res.data.membership });
+        localStorage.setItem("auth", JSON.stringify(newAuth));
+        console.log("plano assinado! ", res.data);
         navigate("/home");
         }).catch((err) => console.log(err.response.data.message));
         setIsLoading(false);
@@ -84,8 +89,7 @@ export default function Plans() {
                     <img alt="placa" src={placa} />
                     <span>Benefícios:</span>
                     <ul>
-                        <li>1. Brindes exclusivos</li>
-                        <li>2. Materiais bônus de web</li>
+                        {membershipsID.perks && membershipsID.perks.map((e,i)=>(<li>{i+1}. {e.title}</li>))}
                     </ul>
                     <img alt="nota" src={nota} />           
                     <span>Preco:</span>
@@ -131,7 +135,7 @@ export default function Plans() {
                         required
                         />
                     </Display>
-                    <Button type="button" onClick={setModal}>
+                    <Button type="button" onClick={ModalLaucher}>
                     ASSINAR
                     </Button>    
 
@@ -212,7 +216,6 @@ export const HalfInput = styled(Input)`
 export const Display =styled.div`
     display: flex;
     gap: 9px;
-    margin-bottom: 10px;
     `
 const ModalContainer = styled.div`
 width: 100vw;

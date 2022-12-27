@@ -25,12 +25,20 @@ function SubscribePlan(body, auth) {
   return promise;
 }
 
+function PlanCancel(auth){
+    const promise= axios.delete(`${BASE_URL}/subscriptions`, auth);
+
+    return promise;
+
+}
+
 
 const api = {
   createConfig,
   login,
   signUp,
-  SubscribePlan
+  SubscribePlan,
+  PlanCancel,
 }
 
 export default api;

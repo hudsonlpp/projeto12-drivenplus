@@ -5,9 +5,11 @@ import React, { useState, useEffect, useContext } from "react";
 import AuthContext from "../context/auth";
 import axios from "axios";
 import { BASE_URL } from "../Services/api";
+import api from "../Services/api";
 import { Link, useNavigate, useLocation, useParams } from "react-router-dom"
 
 export default function Home() {
+  const navigate = useNavigate()
   const[perks,setPerks] = useState([]);
   const[im,setIm] = useState([]);
   const {auth, setAuth}= useContext(AuthContext);
@@ -27,7 +29,6 @@ console.log(auth)
     .catch((err)=>console.log(err.response.data.message))
   }, [])
 
-
   return (
     <Container>
       <Header image={im.image}/>
@@ -38,8 +39,18 @@ console.log(auth)
           </a>
         ))}
       <Footer>
-        <Button>Mudar plano</Button>
-        <RedButton>Cancelar plano</RedButton>
+        <Button onClick={() => navigate("/subscriptions")}>Mudar plano</Button>
+        <RedButton
+           onClick={() =>
+            api.PlanCancel(config)
+              .then(() => { 
+                auth.membership=null
+                localStorage.setItem("auth",JSON.stringify(auth))
+                navigate("/subscriptions")
+              })
+              .catch((err) =>console.log("Não foi possível cancelar o plano"))
+              }
+          >Cancelar plano</RedButton>
       </Footer>
     </Container>
   );

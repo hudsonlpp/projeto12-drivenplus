@@ -17,9 +17,15 @@ export default function Login() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (auth && auth.token) {
-      navigate("/subscriptions");
+    if (auth && auth.token){
+      console.log(auth)
+      if (auth.membership){
+        navigate("/home")
+      } else {
+        navigate("/subscriptions")
+      }
     }
+  
   }, [auth,navigate]);
 
   function handleChange(e) {
@@ -35,7 +41,7 @@ export default function Login() {
       setIsLoading(false);
 
       login(response.data);
-      navigate("/subscriptions");
+      navigate("/today");
     });
     promise.catch(() => {
       setIsLoading(false);
